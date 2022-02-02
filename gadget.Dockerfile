@@ -2,7 +2,7 @@
 
 # BCC built from the gadget branch in the kinvolk/bcc fork.
 # See BCC section in docs/CONTRIBUTING.md for further details.
-ARG BCC="quay.io/kinvolk/bcc:302235e016b9a5255037c9075d28478557c0fc16-focal-release"
+ARG BCC="quay.io/kinvolk/bcc:5e2dc9548bb3603dce3f5cc61907581dce396c58-focal-release"
 ARG OS_TAG=20.04
 
 FROM ${BCC} as bcc
