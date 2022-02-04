@@ -123,6 +123,11 @@ func (t *Trace) Start(trace *gadgetv1alpha1.Trace) {
 		echo "-:pfree_uts_ns" >> /sys/kernel/debug/tracing/kprobe_events 2>/dev/null || true
 		echo "-:pcap_capable" >> /sys/kernel/debug/tracing/kprobe_events 2>/dev/null || true
 
+		# Increase the opened files limit to avoid getting this error on Mariner:
+		# error while loading "tracepoint/raw_syscalls/sys_enter" (too many open files):
+		# This value is the minimal power of 2 to get rid of above error.
+		ulimit -n 2048
+
 		rm -f /run/traceloop.socket
 		exec /bin/traceloop k8s
 	`)
