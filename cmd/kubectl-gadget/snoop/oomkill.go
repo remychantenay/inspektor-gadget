@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package snoop
 
 import (
 	"encoding/json"
@@ -53,7 +53,7 @@ var oomkillCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(oomkillCmd)
+	SnoopCmd.AddCommand(oomkillCmd)
 	utils.AddCommonFlags(oomkillCmd, &params)
 }
 

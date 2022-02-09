@@ -8,22 +8,23 @@ Inspektor Gadget tools are known as gadgets. You can deploy one, two or many gad
 
 Exploring the following documentation will best help you learn which tools can help you in your investigations.
 
-- [bindsnoop](docs/guides/bindsnoop.md)
 - [biolatency](docs/guides/biolatency.md)
 - [biotop](docs/guides/biotop.md)
-- [capabilities](docs/guides/capabilities.md)
-- [dns](docs/guides/dns.md)
-- [execsnoop](docs/guides/execsnoop.md)
 - [filetop](docs/guides/filetop.md)
-- [mountsnoop](docs/guides/mountsnoop.md)
 - [network-policy](docs/guides/network-policy.md)
-- [oomkill](docs/guides/oomkill.md)
-- [opensnoop](docs/guides/opensnoop.md)
 - [process-collector](docs/guides/process-collector.md)
 - [profile](docs/guides/profile.md)
 - [seccomp](docs/guides/seccomp.md)
 - [socket-collector](docs/guides/socket-collector.md)
-- [tcpconnect](docs/guides/tcpconnect.md)
+- `snoop`:
+	- [`bind`](docs/guides/snoop/bind.md)
+	- [`capabilities`](docs/guides/snoop/capabilities.md)
+	- [`dns`](docs/guides/snoop/dns.md)
+	- [`exec`](docs/guides/snoop/exec.md)
+	- [`mount`](docs/guides/snoop/mount.md)
+	- [`oomkill`](docs/guides/snoop/oomkill.md)
+	- [`open`](docs/guides/snoop/open.md)
+	- [`tcpconnect`](docs/guides/snoop/tcpconnect.md)
 - [tcptop](docs/guides/tcptop.md)
 - [traceloop](docs/guides/traceloop.md)
 
@@ -48,8 +49,7 @@ Read the detailed [install instructions](docs/install.md) to find more informati
 
 ## How to use
 
-`kubectl gadget --help` will provide you the list of supported commands and their
-flags.
+`kubectl gadget --help` will provide you the list of supported commands and their flags.
 
 ```bash
 $ kubectl gadget --help
@@ -57,30 +57,46 @@ Usage:
   kubectl-gadget [command]
 
 Available Commands:
-  bindsnoop         Trace IPv4 and IPv6 bind() system calls
   biolatency        Generate a histogram with the distribution of block device I/O latency
   biotop            Trace block device I/O
-  capabilities      Suggest Security Capabilities for securityContext
   completion        generate the autocompletion script for the specified shell
   deploy            Deploy Inspektor Gadget on the cluster
-  dns               Trace DNS requests
-  execsnoop         Trace new processes
   filetop           Trace reads and writes by file, with container details
   help              Help about any command
-  mountsnoop        Trace mount and umount syscalls
   network-policy    Generate network policies based on recorded network activity
-  oomkill           Trace the Linux out-of-memory (OOM) killer
-  opensnoop         Trace open() system calls
   process-collector Gather information about running processes
   profile           Profile CPU usage by sampling stack traces
   seccomp-advisor   Generate seccomp policies based on recorded syscalls activity
   socket-collector  Gather information about network sockets
-  tcpconnect        Trace TCP connect() system calls
+  snoop             Trace and print system events
   tcptop            Show the TCP traffic in a pod
-  tcptracer         Trace tcp connect, accept and close
   traceloop         Get strace-like logs of a pod from the past
   undeploy          Undeploy Inspektor Gadget from cluster
   version           Show version
+
+...
+```
+
+You can then get help for each subcommand:
+
+```bash
+$ kubectl gadget snoop --help
+Trace and print system events
+
+Usage:
+  kubectl-gadget snoop [flags]
+  kubectl-gadget snoop [command]
+
+Available Commands:
+  bind         Trace IPv4 and IPv6 bind() system calls
+  capabilities Trace security capabilities by checking cap_capable() system calls
+  dns          Trace DNS requests
+  exec         Trace new processes
+  mount        Trace mount and umount syscalls
+  oomkill      Trace when OOM killer is triggered and kills a process
+  open         Trace open() system calls
+  tcpconnect   Trace TCP connect() system calls
+  tcptracer    Trace tcp connect, accept and close
 
 ...
 ```

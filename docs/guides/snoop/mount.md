@@ -18,7 +18,7 @@ $ kubectl run busybox-1 --image busybox:latest sleep inf
 You can now use the gadget, but output will be empty:
 
 ```bash
-$ kubectl gadget mountsnoop
+$ kubectl gadget snoop mount
 NODE             NAMESPACE        POD              CONTAINER        COMM             PID     TID     MNT_NS      CALL
 ```
 
@@ -62,7 +62,7 @@ $ kubectl get pods --show-labels
 NAME        READY   STATUS    RESTARTS   AGE     LABELS
 busybox-0   1/1     Running   0          2m9s    run=busybox-0
 busybox-1   1/1     Running   0          3m59s   run=busybox-1
-$ kubectl gadget mountsnoop --selector run=busybox-0
+$ kubectl gadget snoop mount --selector run=busybox-0
 NODE             NAMESPACE        POD              CONTAINER        COMM             PID     TID     MNT_NS      CALL
 ```
 
@@ -99,7 +99,7 @@ minikube         default          busybox-0        busybox-0        mount       
 This gadget supports JSON output, for this simply use `-o json`:
 
 ```bash
-$ kubectl gadget mountsnoop -o json
+$ kubectl gadget snoop mount -o json
 {"node": "minikube", "pcomm": "runc", "pid": 15207, "comm": "mount", "pod": "busybox-1", "data": "", "mnt_ns": 4026532573, "container": "busybox-1", "target": "/quuz", "tgid": 15207, "namespace": "default", "source": "/quux", "flags": 32768, "mntnsid": 0, "ppid": 15197, "type": "ext3"}
 {"node": "minikube", "pcomm": "runc", "pid": 15207, "comm": "mount", "pod": "busybox-1", "data": "", "mnt_ns": 4026532573, "container": "busybox-1", "target": "/quuz", "tgid": 15207, "namespace": "default", "source": "/quux", "flags": 32768, "mntnsid": 0, "ppid": 15197, "type": "ext2"}
 {"node": "minikube", "pcomm": "runc", "pid": 15207, "comm": "mount", "pod": "busybox-1", "data": "", "mnt_ns": 4026532573, "container": "busybox-1", "target": "/quuz", "tgid": 15207, "namespace": "default", "source": "/quux", "flags": 32768, "mntnsid": 0, "ppid": 15197, "type": "ext4"}
@@ -109,7 +109,7 @@ $ kubectl gadget mountsnoop -o json
 {"node": "minikube", "pcomm": "containerd-shim", "pid": 15207, "comm": "mount", "pod": "busybox-1", "data": "", "mnt_ns": 4026532573, "container": "busybox-1", "target": "/quuz", "tgid": 15207, "namespace": "default", "source": "/quux", "flags": 32768, "mntnsid": 0, "ppid": 11312, "type": "fuseblk"}
 {"node": "minikube", "pcomm": "containerd-shim", "pid": 15207, "comm": "mount", "pod": "busybox-1", "data": "", "mnt_ns": 4026532573, "container": "busybox-1", "target": "/quuz", "tgid": 15207, "namespace": "default", "source": "/quux", "flags": 32768, "mntnsid": 0, "ppid": 11312, "type": "xfs"}
 # You can use jq to make the output easier to read:
-$ kubectl gadget mountsnoop -o json | jq
+$ kubectl gadget snoop mount -o json | jq
 {
   "node": "minikube",
   "pcomm": "runc",

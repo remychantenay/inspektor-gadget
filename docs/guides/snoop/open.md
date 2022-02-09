@@ -16,7 +16,7 @@ We can simply filter for the pod "mypod" and omit specifying the node,
 thus snooping on all nodes for pod "mypod":
 
 ```bash
-$ kubectl gadget opensnoop --podname mypod
+$ kubectl gadget snoop open --podname mypod
 NODE             NAMESPACE        POD              CONTAINER       PID    COMM               FD ERR PATH
 ip-10-0-30-247   default          mypod            mypod           18455  whoami              3   0 /etc/passwd
 ip-10-0-30-247   default          mypod            mypod           18521  whoami              3   0 /etc/passwd

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package snoop
 
 import (
 	"encoding/json"
@@ -84,7 +84,7 @@ var dnsCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(dnsCmd)
+	SnoopCmd.AddCommand(dnsCmd)
 	utils.AddCommonFlags(dnsCmd, &params)
 }
 
