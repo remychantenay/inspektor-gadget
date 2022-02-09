@@ -10,10 +10,11 @@ Exploring the following documentation will best help you learn which tools can h
 
 - [biolatency](docs/guides/biolatency.md)
 - [network-policy](docs/guides/network-policy.md)
-- [process-collector](docs/guides/process-collector.md)
 - [profile](docs/guides/profile.md)
 - [seccomp](docs/guides/seccomp.md)
-- [socket-collector](docs/guides/socket-collector.md)
+- `snapshot`:
+	- [`process`](docs/guides/snapshot/process.md)
+	- [`socket`](docs/guides/snapshot/socket.md)
 - `snoop`:
 	- [`bind`](docs/guides/snoop/bind.md)
 	- [`capabilities`](docs/guides/snoop/capabilities.md)
@@ -63,10 +64,9 @@ Available Commands:
   deploy            Deploy Inspektor Gadget on the cluster
   help              Help about any command
   network-policy    Generate network policies based on recorded network activity
-  process-collector Gather information about running processes
   profile           Profile CPU usage by sampling stack traces
   seccomp-advisor   Generate seccomp policies based on recorded syscalls activity
-  socket-collector  Gather information about network sockets
+  snapshot          Take a snapshot of a subsystem and print it
   snoop             Trace and print system events
   top               Gather, sort and print events according to a given criteria
   traceloop         Get strace-like logs of a pod from the past
@@ -96,6 +96,17 @@ Available Commands:
   open         Trace open() system calls
   tcpconnect   Trace TCP connect() system calls
   tcptracer    Trace tcp connect, accept and close
+
+...
+$ kubectl gadget snapshot -h
+Take a snapshot of a subsystem and print it
+
+Usage:
+  kubectl-gadget snapshot [flags]
+
+Available Commands:
+  process     Gather information about running processes
+  socket      Gather information about network sockets
 
 ...
 $ kubectl gadget top --help

@@ -407,10 +407,6 @@ func TestProcessCollector(t *testing.T) {
 
 	t.Parallel()
 
-	if *githubCI {
-		t.Skip("Cannot run process-collector within GitHub CI.")
-	}
-
 	commands := []*command{
 		createTestNamespaceCommand(ns),
 		{
@@ -421,7 +417,7 @@ func TestProcessCollector(t *testing.T) {
 		waitUntilTestPodReadyCommand(ns),
 		{
 			name:           "Run process-collector gadget",
-			cmd:            fmt.Sprintf("$KUBECTL_GADGET process-collector -n %s", ns),
+			cmd:            fmt.Sprintf("$KUBECTL_GADGET snapshot process -n %s", ns),
 			expectedRegexp: fmt.Sprintf(`%s\s+test-pod\s+test-pod\s+nginx\s+\d+`, ns),
 		},
 		deleteTestNamespaceCommand(ns),
@@ -487,10 +483,6 @@ func TestSocketCollector(t *testing.T) {
 
 	t.Parallel()
 
-	if *githubCI {
-		t.Skip("Cannot run socket-collector within GitHub CI.")
-	}
-
 	commands := []*command{
 		createTestNamespaceCommand(ns),
 		{
@@ -501,7 +493,7 @@ func TestSocketCollector(t *testing.T) {
 		waitUntilTestPodReadyCommand(ns),
 		{
 			name:           "Run socket-collector gadget",
-			cmd:            fmt.Sprintf("$KUBECTL_GADGET socket-collector -n %s", ns),
+			cmd:            fmt.Sprintf("$KUBECTL_GADGET snapshot socket -n %s", ns),
 			expectedRegexp: fmt.Sprintf(`%s\s+test-pod\s+TCP\s+0\.0\.0\.0`, ns),
 		},
 		deleteTestNamespaceCommand(ns),
