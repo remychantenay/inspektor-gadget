@@ -9,8 +9,6 @@ Inspektor Gadget tools are known as gadgets. You can deploy one, two or many gad
 Exploring the following documentation will best help you learn which tools can help you in your investigations.
 
 - [biolatency](docs/guides/biolatency.md)
-- [biotop](docs/guides/biotop.md)
-- [filetop](docs/guides/filetop.md)
 - [network-policy](docs/guides/network-policy.md)
 - [process-collector](docs/guides/process-collector.md)
 - [profile](docs/guides/profile.md)
@@ -25,7 +23,10 @@ Exploring the following documentation will best help you learn which tools can h
 	- [`oomkill`](docs/guides/snoop/oomkill.md)
 	- [`open`](docs/guides/snoop/open.md)
 	- [`tcpconnect`](docs/guides/snoop/tcpconnect.md)
-- [tcptop](docs/guides/tcptop.md)
+- `top`:
+	- [`bio`](docs/guides/top/bio.md)
+	- [`file`](docs/guides/top/file.md)
+	- [`tcp`](docs/guides/top/tcp.md)
 - [traceloop](docs/guides/traceloop.md)
 
 ## Installation
@@ -58,10 +59,8 @@ Usage:
 
 Available Commands:
   biolatency        Generate a histogram with the distribution of block device I/O latency
-  biotop            Trace block device I/O
   completion        generate the autocompletion script for the specified shell
   deploy            Deploy Inspektor Gadget on the cluster
-  filetop           Trace reads and writes by file, with container details
   help              Help about any command
   network-policy    Generate network policies based on recorded network activity
   process-collector Gather information about running processes
@@ -69,7 +68,7 @@ Available Commands:
   seccomp-advisor   Generate seccomp policies based on recorded syscalls activity
   socket-collector  Gather information about network sockets
   snoop             Trace and print system events
-  tcptop            Show the TCP traffic in a pod
+  top               Gather, sort and print events according to a given criteria
   traceloop         Get strace-like logs of a pod from the past
   undeploy          Undeploy Inspektor Gadget from cluster
   version           Show version
@@ -97,6 +96,19 @@ Available Commands:
   open         Trace open() system calls
   tcpconnect   Trace TCP connect() system calls
   tcptracer    Trace tcp connect, accept and close
+
+...
+$ kubectl gadget top --help
+Gather, sort and print events according to a given criteria
+
+Usage:
+  kubectl-gadget top [flags]
+  kubectl-gadget top [command]
+
+Available Commands:
+  bio         Trace block device I/O
+  file        Trace reads and writes by file, with container details
+  tcp         Trace TCP traffic in a specific pod
 
 ...
 ```

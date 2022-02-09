@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package top
 
 import (
 	"encoding/json"
@@ -48,7 +48,7 @@ var (
 )
 
 var filetopCmd = &cobra.Command{
-	Use:   "filetop [interval]",
+	Use:   "file [interval]",
 	Short: "Trace reads and writes by file, with container details",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		var err error
@@ -102,7 +102,7 @@ func init() {
 	filetopCmd.Flags().StringVarP(&sortby_str, "sort", "", "rbytes", "Sort column")
 	filetopCmd.Flags().BoolVarP(&allFiles, "all-files", "a", false, "Include non-regular file types (sockets, FIFOs, etc)")
 
-	rootCmd.AddCommand(filetopCmd)
+	TopCmd.AddCommand(filetopCmd)
 	utils.AddCommonFlags(filetopCmd, &params)
 }
 

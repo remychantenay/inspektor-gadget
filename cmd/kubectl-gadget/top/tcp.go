@@ -1,4 +1,4 @@
-// Copyright 2019-2021 The Inspektor Gadget authors
+// Copyright 2019-2022 The Inspektor Gadget authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,36 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package top
 
 import (
-	"os"
-
-	"github.com/spf13/cobra"
-
-	"github.com/kinvolk/inspektor-gadget/cmd/kubectl-gadget/snoop"
-	"github.com/kinvolk/inspektor-gadget/cmd/kubectl-gadget/top"
-
+	"github.com/kinvolk/inspektor-gadget/cmd/kubectl-gadget/bcck8s"
 	"github.com/kinvolk/inspektor-gadget/cmd/kubectl-gadget/utils"
+	"github.com/spf13/cobra"
 )
 
-// common params for all gadgets
-var params utils.CommonFlags
-
-var rootCmd = &cobra.Command{
-	Use:   "kubectl-gadget",
-	Short: "Collection of gadgets for Kubernetes developers",
+var tcptopCmd = &cobra.Command{
+	Use:   "tcp",
+	Short: "Trace TCP traffic in a specific pod",
+	Run:   bcck8s.BccCmd("tcptop", "/usr/share/bcc/tools/tcptop", &params, ""),
 }
 
 func init() {
-	utils.FlagInit(rootCmd)
-
-	rootCmd.AddCommand(snoop.SnoopCmd)
-	rootCmd.AddCommand(top.TopCmd)
-}
-
-func main() {
-	if err := rootCmd.Execute(); err != nil {
-		os.Exit(1)
-	}
+	TopCmd.AddCommand(tcptopCmd)
+	utils.AddCommonFlags(tcptopCmd, &params)
 }

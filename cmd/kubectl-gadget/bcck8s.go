@@ -33,12 +33,6 @@ var (
 // support should use "/bin/gadgets/" as the path for the binary. Otherwise
 // "/usr/share/bcc/tools/" should be used.
 
-var biotopCmd = &cobra.Command{
-	Use:   "biotop",
-	Short: "Trace block device I/O",
-	Run:   bcck8s.BccCmd("biotop", "/usr/share/bcc/tools/biotop", &params, ""),
-}
-
 var profileCmd = &cobra.Command{
 	Use:   "profile",
 	Short: "Profile CPU usage by sampling stack traces",
@@ -55,17 +49,9 @@ var profileCmd = &cobra.Command{
 	}(),
 }
 
-var tcptopCmd = &cobra.Command{
-	Use:   "tcptop",
-	Short: "Show the TCP traffic in a pod",
-	Run:   bcck8s.BccCmd("tcptop", "/usr/share/bcc/tools/tcptop", &params, ""),
-}
-
 func init() {
 	commands := []*cobra.Command{
-		biotopCmd,
 		profileCmd,
-		tcptopCmd,
 	}
 
 	// Add flags for all BCC gadgets
