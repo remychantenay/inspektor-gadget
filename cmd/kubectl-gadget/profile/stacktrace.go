@@ -1,4 +1,4 @@
-// Copyright 2019-2021 The Inspektor Gadget authors
+// Copyright 2019-2022 The Inspektor Gadget authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,31 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package profile
 
 import (
-	"github.com/spf13/cobra"
-
 	"github.com/kinvolk/inspektor-gadget/cmd/kubectl-gadget/bcck8s"
 	"github.com/kinvolk/inspektor-gadget/cmd/kubectl-gadget/utils"
+	"github.com/spf13/cobra"
 )
 
 var (
-	stackFlag  bool
-	uniqueFlag bool
-
 	profileKernel bool
 	profileUser   bool
 )
 
-// create the commands for the different gadgets. The gadgets that have CO-RE
-// support should use "/bin/gadgets/" as the path for the binary. Otherwise
-// "/usr/share/bcc/tools/" should be used.
-
 var profileCmd = &cobra.Command{
-	Use:   "profile",
+	Use:   "stacktrace",
 	Short: "Profile CPU usage by sampling stack traces",
-	Run:   func() func(*cobra.Command, []string) {
+	Run: func(cmd *cobra.Command, args []string) {
 		specificFlag := "-f -d "
 
 		if profileUser {
@@ -45,22 +37,14 @@ var profileCmd = &cobra.Command{
 			specificFlag += "-K "
 		}
 
-		return bcck8s.BccCmd("profile", "/usr/share/bcc/tools/profile", &params, specificFlag)
-	}(),
+		bcck8s.BccCmd("profile", "/usr/share/bcc/tools/profile", &params, specificFlag)(cmd, args)
+	},
 }
 
 func init() {
-	commands := []*cobra.Command{
-		profileCmd,
-	}
+	ProfilerCmd.AddCommand(profileCmd)
+	utils.AddCommonFlags(profileCmd, &params)
 
-	// Add flags for all BCC gadgets
-	for _, command := range commands {
-		rootCmd.AddCommand(command)
-		utils.AddCommonFlags(command, &params)
-	}
-
-	// Add flags specific to some BCC gadgets
 	profileCmd.PersistentFlags().BoolVarP(
 		&profileUser,
 		"user",

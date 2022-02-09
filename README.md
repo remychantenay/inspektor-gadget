@@ -8,9 +8,10 @@ Inspektor Gadget tools are known as gadgets. You can deploy one, two or many gad
 
 Exploring the following documentation will best help you learn which tools can help you in your investigations.
 
-- [biolatency](docs/guides/biolatency.md)
 - [network-policy](docs/guides/network-policy.md)
-- [profile](docs/guides/profile.md)
+- `profile`:
+	- [`biolatency`](docs/guides/profile/biolatency.md)
+	- [`stacktrace`](docs/guides/profile/stacktrace.md)
 - [seccomp](docs/guides/seccomp.md)
 - `snapshot`:
 	- [`process`](docs/guides/snapshot/process.md)
@@ -59,12 +60,11 @@ Usage:
   kubectl-gadget [command]
 
 Available Commands:
-  biolatency        Generate a histogram with the distribution of block device I/O latency
   completion        generate the autocompletion script for the specified shell
   deploy            Deploy Inspektor Gadget on the cluster
   help              Help about any command
   network-policy    Generate network policies based on recorded network activity
-  profile           Profile CPU usage by sampling stack traces
+  profile           Profile different subsystems
   seccomp-advisor   Generate seccomp policies based on recorded syscalls activity
   snapshot          Take a snapshot of a subsystem and print it
   snoop             Trace and print system events
@@ -79,6 +79,18 @@ Available Commands:
 You can then get help for each subcommand:
 
 ```bash
+$ kubectl gadget profile --help
+Profile different subsystems
+
+Usage:
+  kubectl-gadget profile [flags]
+  kubectl-gadget profile [command]
+
+Available Commands:
+  biolatency  Generate a histogram with the distribution of block device I/O latency
+  stacktrace  Profile CPU usage by sampling stack traces
+
+...
 $ kubectl gadget snoop --help
 Trace and print system events
 
