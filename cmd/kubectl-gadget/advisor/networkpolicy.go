@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package advisor
 
 import (
 	"bufio"
@@ -60,7 +60,7 @@ var (
 )
 
 func init() {
-	rootCmd.AddCommand(networkPolicyCmd)
+	AdvisorCmd.AddCommand(networkPolicyCmd)
 
 	networkPolicyCmd.AddCommand(networkPolicyMonitorCmd)
 	networkPolicyMonitorCmd.PersistentFlags().StringVarP(&outputFileName, "output", "", "-", "File name output")

@@ -8,11 +8,12 @@ Inspektor Gadget tools are known as gadgets. You can deploy one, two or many gad
 
 Exploring the following documentation will best help you learn which tools can help you in your investigations.
 
-- [network-policy](docs/guides/network-policy.md)
+- `advisor`:
+	- [`network-policy`](docs/guides/advisor/network-policy.md)
+	- [`seccomp`](docs/guides/advisor/seccomp.md)
 - `profile`:
 	- [`biolatency`](docs/guides/profile/biolatency.md)
 	- [`stacktrace`](docs/guides/profile/stacktrace.md)
-- [seccomp](docs/guides/seccomp.md)
 - `snapshot`:
 	- [`process`](docs/guides/snapshot/process.md)
 	- [`socket`](docs/guides/snapshot/socket.md)
@@ -60,12 +61,11 @@ Usage:
   kubectl-gadget [command]
 
 Available Commands:
+  advisor           Recommend system configurations based on collected information
   completion        generate the autocompletion script for the specified shell
   deploy            Deploy Inspektor Gadget on the cluster
   help              Help about any command
-  network-policy    Generate network policies based on recorded network activity
   profile           Profile different subsystems
-  seccomp-advisor   Generate seccomp policies based on recorded syscalls activity
   snapshot          Take a snapshot of a subsystem and print it
   snoop             Trace and print system events
   top               Gather, sort and print events according to a given criteria
@@ -79,6 +79,18 @@ Available Commands:
 You can then get help for each subcommand:
 
 ```bash
+$ kubectl gadget advisor --help
+Advise system configurations based on collected information
+
+Usage:
+  kubectl-gadget advisor [flags]
+  kubectl-gadget advisor [command]
+
+Available Commands:
+  network-policy Generate network policies based on recorded network activity
+  seccomp        Generate seccomp policies based on recorded syscalls activity
+
+...
 $ kubectl gadget profile --help
 Profile different subsystems
 

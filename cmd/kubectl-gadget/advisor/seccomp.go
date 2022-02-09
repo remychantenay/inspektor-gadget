@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package advisor
 
 import (
 	"context"
@@ -32,7 +32,7 @@ import (
 )
 
 var seccompAdvisorCmd = &cobra.Command{
-	Use:   "seccomp-advisor",
+	Use:   "seccomp",
 	Short: "Generate seccomp policies based on recorded syscalls activity",
 }
 
@@ -64,7 +64,7 @@ var (
 
 func init() {
 	// Add generic information.
-	rootCmd.AddCommand(seccompAdvisorCmd)
+	AdvisorCmd.AddCommand(seccompAdvisorCmd)
 	utils.AddCommonFlags(seccompAdvisorCmd, &params)
 
 	seccompAdvisorCmd.AddCommand(seccompAdvisorStartCmd)
