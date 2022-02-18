@@ -72,12 +72,6 @@ var tcptracerCmd = &cobra.Command{
 	Run:   bccCmd("tcptracer", "/usr/share/bcc/tools/tcptracer"),
 }
 
-var capabilitiesCmd = &cobra.Command{
-	Use:   "capabilities",
-	Short: "Suggest Security Capabilities for securityContext",
-	Run:   bccCmd("capabilities", "/usr/share/bcc/tools/capable"),
-}
-
 var (
 	stackFlag  bool
 	uniqueFlag bool
@@ -94,7 +88,6 @@ func init() {
 		tcptopCmd,
 		tcpconnectCmd,
 		tcptracerCmd,
-		capabilitiesCmd,
 	}
 
 	// Add flags for all BCC gadgets
@@ -102,22 +95,6 @@ func init() {
 		rootCmd.AddCommand(command)
 		utils.AddCommonFlags(command, &params)
 	}
-
-	// Add flags specific to some BCC gadgets
-	capabilitiesCmd.PersistentFlags().BoolVarP(
-		&stackFlag,
-		"print-stack",
-		"",
-		false,
-		"Print kernel and userspace call stack of cap_capable()",
-	)
-	capabilitiesCmd.PersistentFlags().BoolVarP(
-		&uniqueFlag,
-		"unique",
-		"",
-		false,
-		"Don't print duplicate capability checks",
-	)
 
 	profileCmd.PersistentFlags().BoolVarP(
 		&profileUser,
