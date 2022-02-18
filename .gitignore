@@ -25,3 +25,4 @@ bin/
 !pkg/gadgets/fsslower/tracer/core/*.o
 !pkg/gadgets/oomkill/tracer/*.o
 !pkg/gadgets/opensnoop/tracer/core/*.o
+!pkg/gadgets/bindsnoop/tracer/core/*.o
