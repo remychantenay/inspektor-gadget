@@ -66,12 +66,6 @@ var tcpconnectCmd = &cobra.Command{
 	Run:   bccCmd("tcpconnect", "/bin/gadgets/tcpconnect"),
 }
 
-var tcptracerCmd = &cobra.Command{
-	Use:   "tcptracer",
-	Short: "Trace tcp connect, accept and close",
-	Run:   bccCmd("tcptracer", "/usr/share/bcc/tools/tcptracer"),
-}
-
 var capabilitiesCmd = &cobra.Command{
 	Use:   "capabilities",
 	Short: "Suggest Security Capabilities for securityContext",
@@ -93,7 +87,6 @@ func init() {
 		profileCmd,
 		tcptopCmd,
 		tcpconnectCmd,
-		tcptracerCmd,
 		capabilitiesCmd,
 	}
 
