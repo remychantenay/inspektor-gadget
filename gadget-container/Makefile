@@ -14,6 +14,7 @@ gadgettracermanager: ebpf-objects
 	mkdir -p bin
 	GO111MODULE=on CGO_ENABLED=1 GOOS=linux go build \
 		-tags withebpf \
+		-mod=vendor \
 		-o bin/gadgettracermanager \
 		./gadgettracermanager/
 

@@ -34,8 +34,10 @@ RUN set -ex; mkdir -p /tmp/btfs && \
 COPY go.mod go.sum /gadget/
 RUN cd /gadget && go mod download
 
+RUN apt-get update && apt-get install -qy llvm
 # This COPY is limited by .dockerignore
 COPY ./ /gadget
+RUN cd /gadget && go mod vendor && rm -fr vendor/github.com/cilium/ebpf && cd vendor/github.com/cilium && git clone https://github.com/joamaki/ebpf.git && cd ebpf && git checkout pr/joamaki/bitfields
 RUN cd /gadget/gadget-container && make gadget-container-deps
 
 # Execute BTFGen
