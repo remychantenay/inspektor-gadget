@@ -344,7 +344,8 @@ func newServer(conf *Conf) (*GadgetTracerManager, error) {
 	containerEventFuncs := []pubsub.FuncNotify{}
 
 	if !conf.TestOnly {
-		if _, err := ebpf.RemoveMemlockRlimit(); err != nil {
+		noLimit := unix.Rlimit{Cur: unix.RLIM_INFINITY, Max: unix.RLIM_INFINITY}
+		if err := unix.Prlimit(0, unix.RLIMIT_MEMLOCK, &noLimit, nil); err != nil {
 			return nil, err
 		}
 
