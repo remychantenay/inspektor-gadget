@@ -43,11 +43,11 @@ import (
 )
 
 const (
-	GADGET_OPERATION = "gadget.kinvolk.io/operation"
+	GadgetOperation = "gadget.kinvolk.io/operation"
 	// We name it "global" as if one trace is created on several nodes, then each
 	// copy of the trace on each node will share the same id.
-	GLOBAL_TRACE_ID = "global-trace-id"
-	traceTimeout    = 2 * time.Second
+	GlobalTraceID = "global-trace-id"
+	TraceTimeout  = 2 * time.Second
 )
 
 // TraceConfig is used to contain information used to manage a trace.
@@ -140,7 +140,7 @@ func printTraceFeedback(m map[string]string, totalNodes int) {
 
 func deleteTraces(traceClient *clientset.Clientset, traceID string) {
 	listTracesOptions := metav1.ListOptions{
-		LabelSelector: fmt.Sprintf("%s=%s", GLOBAL_TRACE_ID, traceID),
+		LabelSelector: fmt.Sprintf("%s=%s", GlobalTraceID, traceID),
 	}
 
 	err := traceClient.GadgetV1alpha1().Traces("gadget").DeleteCollection(
@@ -203,7 +203,7 @@ func createTraces(trace *gadgetv1alpha1.Trace) error {
 			context.TODO(), trace, metav1.CreateOptions{},
 		)
 		if err != nil {
-			traceID, present := trace.ObjectMeta.Labels[GLOBAL_TRACE_ID]
+			traceID, present := trace.ObjectMeta.Labels[GlobalTraceID]
 			if present {
 				// Clean before exiting!
 				deleteTraces(traceClient, traceID)
@@ -238,7 +238,7 @@ func updateTraceOperation(trace *gadgetv1alpha1.Trace, operation string) error {
 	patch := JSONMergePatch{
 		ObjectMeta: ObjectMeta{
 			Annotations{
-				GADGET_OPERATION: operation,
+				GadgetOperation: operation,
 			},
 		},
 	}
@@ -285,10 +285,10 @@ func CreateTrace(config *TraceConfig) (string, error) {
 			GenerateName: config.GadgetName + "-",
 			Namespace:    "gadget",
 			Annotations: map[string]string{
-				GADGET_OPERATION: config.Operation,
+				GadgetOperation: config.Operation,
 			},
 			Labels: map[string]string{
-				GLOBAL_TRACE_ID: traceID,
+				GlobalTraceID: traceID,
 				// Add all this information here to be able to find the trace thanks
 				// to them when calling getTraceListFromParameters().
 				"gadgetName":    config.GadgetName,
@@ -353,7 +353,7 @@ func getTraceListFromOptions(listTracesOptions metav1.ListOptions) (*gadgetv1alp
 // If no trace corresponds to this ID, error is set.
 func getTraceListFromID(traceID string) (*gadgetv1alpha1.TraceList, error) {
 	listTracesOptions := metav1.ListOptions{
-		LabelSelector: fmt.Sprintf("%s=%s", GLOBAL_TRACE_ID, traceID),
+		LabelSelector: fmt.Sprintf("%s=%s", GlobalTraceID, traceID),
 	}
 
 	traces, err := getTraceListFromOptions(listTracesOptions)
@@ -449,7 +449,7 @@ func getTraceWatcher(traceID string) (watch.Interface, error) {
 	}
 
 	watchOptions := metav1.ListOptions{
-		LabelSelector: fmt.Sprintf("%s=%s", GLOBAL_TRACE_ID, traceID),
+		LabelSelector: fmt.Sprintf("%s=%s", GlobalTraceID, traceID),
 	}
 
 	watcher, err := traceClient.GadgetV1alpha1().Traces("gadget").Watch(context.TODO(), watchOptions)
@@ -479,7 +479,7 @@ func waitForCondition(traceID string, conditionFunction func(*gadgetv1alpha1.Tra
 	nodeErrors := make(map[string]string)
 	nodeWarnings := make(map[string]string)
 
-	ctx, cancel := watchtools.ContextWithOptionalTimeout(context.Background(), traceTimeout)
+	ctx, cancel := watchtools.ContextWithOptionalTimeout(context.Background(), TraceTimeout)
 	_, err = untilWithoutRetry(ctx, watcher, func(event watch.Event) (bool, error) {
 		// This function will be executed until:
 		// 1. The number of watched traces equals the number of traces, i.e. we
@@ -571,7 +571,7 @@ func waitForNoOperation(traceID string) (*gadgetv1alpha1.TraceList, error) {
 			return true
 		}
 
-		_, present := trace.ObjectMeta.Annotations[GADGET_OPERATION]
+		_, present := trace.ObjectMeta.Annotations[GadgetOperation]
 		return !present
 	})
 }
@@ -717,7 +717,7 @@ func PrintAllTraces(config *TraceConfig) error {
 	printingMap := map[string]*printingInformation{}
 
 	for _, trace := range traces {
-		id, present := trace.ObjectMeta.Labels[GLOBAL_TRACE_ID]
+		id, present := trace.ObjectMeta.Labels[GlobalTraceID]
 		if !present {
 			continue
 		}
@@ -842,7 +842,7 @@ func genericStreamsDisplay(
 	transformLine func(string) string,
 ) error {
 	transform := func(line string) string {
-		if params.OutputMode == OutputModeJson {
+		if params.OutputMode == OutputModeJSON {
 			return line
 		}
 		return transformLine(line)
@@ -868,7 +868,7 @@ func genericStreams(
 
 	verbose := false
 	// verbose only when not json is used
-	if params.Verbose && params.OutputMode != OutputModeJson {
+	if params.Verbose && params.OutputMode != OutputModeJSON {
 		verbose = true
 	}
 
@@ -906,7 +906,7 @@ func genericStreams(
 	for {
 		select {
 		case <-sigs:
-			if params.OutputMode != OutputModeJson {
+			if params.OutputMode != OutputModeJSON {
 				fmt.Println("\nTerminating...")
 			}
 			return nil
@@ -919,7 +919,7 @@ func genericStreams(
 	}
 }
 
-// DeleteTraceByGadgetName removes all traces with this gadget name
+// DeleteTracesByGadgetName removes all traces with this gadget name
 func DeleteTracesByGadgetName(gadget string) error {
 	traceClient, err := getTraceClient()
 	if err != nil {
